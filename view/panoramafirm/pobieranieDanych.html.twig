@@ -1,0 +1,22 @@
+{% extends 'index.html.twig' %}
+
+{% block body %}
+<h1> Pobieranie danych z panoramy firm </h1>
+    Ostatnie pobieranie skończone na {{ previouscategory }} kategoria, {{ previouspage }} strona<br/><br/>
+    <form action="index.php" method="GET">
+      <div class="form-group">
+        <label for="nrkategorii">Nr kategorii</label>
+        <input type="text" class="form-control" name="nrkategorii" id="nrkategorii" value="{{ previouscategory }}">
+      </div>
+      <div class="form-group">
+        <label for="nrstrony">Nr strony</label>
+        <input type="text" class="form-control" name="nrstrony" id="nrstrony" value="{{ previouspage }}">
+      </div>
+        
+        <input type="hidden" value="pfdata" name="site"/>
+        <input type="hidden" value="ok" name="start"/>
+        
+      <button type="submit" class="btn btn-primary">Zacznij pobieranie</button>
+    </form>
+    <br/><br/>
+{% endblock %}

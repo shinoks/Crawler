@@ -1,0 +1,27 @@
+{% extends 'index.html.twig' %}
+
+{% block body %}
+
+<h1> Pobieranie danych z panoramy firm </h1>
+
+Kategoria: {{ categorynumber }} z {{ categorycount }}<br/><br/>
+Nazwa kategorii: {{ categoryname }}<br/><br/>
+Adres obecny: <b>{{ url }}</b><br/><br/>
+{{ progress }}% wszystkich kategorii.
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%">
+        <span class="sr-only">{{ progress }}% Complete (success)</span>
+      </div>
+    </div>
+    {% if error == 'category'%}
+        Brak kategorii. Wygeneruj najpierw kategorie następnie spróbuj ponownie<br/>
+    {% endif %}
+    
+    {% if info == 'categoryend' %}
+        GOTOWE - KONIEC<br/><br/>
+        Przechodzę do następnej kategorii<br/>
+    {% endif %}
+
+ {{ html|raw }}
+    
+{% endblock %}
