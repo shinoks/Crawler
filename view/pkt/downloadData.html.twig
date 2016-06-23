@@ -1,9 +1,11 @@
 {% extends 'index.html.twig' %}
 
-{% block title %} Pobieranie danych z pf.pl {% endblock %}
+{% block title %}
+    Pobieranie danych z pkt.pl
+{% endblock %}
 
 {% block body %}
-<h1> Pobieranie danych z panoramy firm </h1>
+<h1> Pobieranie danych z pkt.pl </h1>
     Ostatnie pobieranie skończone na {{ previouscategory }} kategoria, {{ previouspage }} strona<br/><br/>
     <form action="index.php" method="GET">
       <div class="form-group">
@@ -15,7 +17,7 @@
         <input type="text" class="form-control" name="nrstrony" id="nrstrony" value="{{ previouspage }}">
       </div>
         
-        <input type="hidden" value="pfdata" name="site"/>
+        <input type="hidden" value="pktdata" name="site"/>
         <input type="hidden" value="ok" name="start"/>
         
       <button type="submit" class="btn btn-primary">Zacznij pobieranie</button>

@@ -18,6 +18,12 @@ if(!isset($_GET['site'])){
 } elseif ($_GET['site']=='contact'){
     $contact = new defaultController();
     echo $contact->getContactSite();
+}  elseif ($_GET['site']=='pktcategories'){
+    $pktcategories = new polskieKsiazkiTelefoniczne();
+    echo $pktcategories->getCategorySite();
+}  elseif ($_GET['site']=='pktdata'){
+    $pktdata = new polskieKsiazkiTelefoniczne();
+    echo $pktdata->getDataSite();
 } else {
     include('sites/start.php');
 }

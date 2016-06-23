@@ -1,10 +1,12 @@
 {% extends 'index.html.twig' %}
 
-{% block title %} Pobieranie danych z pf.pl {% endblock %}
+{% block title %}
+    Pobieranie danych z pkt.pl
+{% endblock %}
 
 {% block body %}
 
-<h1> Pobieranie kategorii z pkt.pl </h1>
+<h1> Pobieranie kategorii z pkt.pl</h1>
 
 Kategoria: {{ professionactualnumber }} z {{ professionnumber }}<br/><br/>
 Adres obecny: <b>{{ url }}</b><br/><br/>
@@ -21,10 +23,12 @@ Adres obecny: <b>{{ url }}</b><br/><br/>
     {% endif %}
     
     {% if info == 'categoryend' %}
-        GOTOWE - KONIEC<br/><br/>
+        Koniec kategorii przechodzę dalej<br/><br/>
         <br/>
+    {% elseif info == 'end' %}
+        Koniec pobierania
     {% endif %}
 
- {{ html|raw }}
+ {{ html|raw }}<br/><br/>
     
 {% endblock %}

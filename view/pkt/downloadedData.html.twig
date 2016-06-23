@@ -1,9 +1,7 @@
 {% extends 'index.html.twig' %}
 
-{% block title %} Pobieranie danych z pf.pl {% endblock %}
-
 {% block body %}
-<h1> Pobrane dane z panoramy firm </h1>
+<h1> Pobrane dane z pkt.pl </h1>
     <ol>
         {% for file in files %}
             <li><a href='{{ catalog|e }}/{{ file|e }}'>{{ file }}</a></li>
