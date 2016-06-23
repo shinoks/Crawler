@@ -11,7 +11,7 @@ if(!isset($_GET['site'])){
     echo $panoramakategorie->getCategorySite();
 } elseif ($_GET['site']=='pfinstruction'){
     $instruction = new panoramaFirm();
-    echo $instruction->getContactSite();
+    echo $instruction->getInstructionSite();
 } elseif ($_GET['site']=='pfdownloadeddata'){
     $panoramadata = new panoramaFirm();
     echo $panoramadata->getDownloadedDataSite();

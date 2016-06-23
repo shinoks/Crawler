@@ -1,0 +1,11 @@
+{% extends 'index.html.twig' %}
+
+{% block body %}
+<h1> Pobrane dane z panoramy firm </h1>
+    <ol>
+        {% for file in files %}
+            <li><a href='{{ catalog|e }}/{{ file|e }}'>{{ file }}</a></li>
+        {% endfor %}
+    </ol>
+    <br/><br/>
+{% endblock %}

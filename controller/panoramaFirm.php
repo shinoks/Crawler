@@ -127,6 +127,19 @@ class panoramaFirm
         return $this->twig->render("index.html.twig", array());
     }
     
+    private function getDownloadedData($catalog)
+    {
+        $files = '';
+        $preg = $catalog.'/*{*.csv}';
+        foreach(glob($preg, GLOB_BRACE) as $file)
+          if($file != '.' && $file != '..') 
+            $files .= $file.';';
+        
+        $files = str_replace(''.$catalog.'/','',$files);
+        $ready = explode(';',$files);
+        
+        return $ready;
+    }
     
     public function getDataSite()
     {
@@ -191,7 +204,7 @@ class panoramaFirm
                 if(count($kat) == 1){
                     $error ='category';
                 }else {
-                    header( "refresh:5;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
+                    header( "refresh:1;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
                 }
                 
             } else {
@@ -201,7 +214,7 @@ class panoramaFirm
                 if($kat = 0){
                     $error ='category';
                 }else {
-                    header( "refresh:2;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
+                    header( "refresh:1;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
                 }
             }
             
@@ -225,55 +238,77 @@ class panoramaFirm
     
     public function getCategorySite()
     {
-        
-    $categorynumber = $this->getCategoryNumber();
-    $profession = ['z','b','c','u','r','f','h','i','g','k','j','l','t','m','n','p','s','a'];
-    $kategorie = '';
-    $plik = '';
-    $info = ' ';
-    $professionNumber = count($profession);
-    @$url = 'http://panoramafirm.pl/biuro,'.$profession[$categorynumber].'/branze.html';
-
-    $html = " Adres obecny: <b>".$url."</b><br/><br/>";
-        $downloaded = $this->getContents($url);
-        if($downloaded != '0'){
-           $dom = $this->loadHTML($downloaded);
-        }
-        
-    if($strona = @file_get_contents($url)){
-        
-        $dom = $this->loadHTML($strona);
-        $links = $dom->getElementsByTagName("article");
-        $article = $this->saveHTML($links);;
-        
-        $dom = $this->loadHTML($article);
-        $links = $dom->getElementsByTagName("a");
-        
-        foreach ($links as $link) {
-            $kategorie .= $link->getAttribute('href').';';
-            $html .= $link->getAttribute('href').'<br/>';
-        }
-        
-        $this->setData($kategorie,'categories');
-        
-        $categorynumber = $categorynumber+1;
-        
-        header( "refresh:5;url=index.php?site=pfcategories&nrkategorii=". $categorynumber ."" ); 
-            
-    } else {
-        $info = "categoryend";
-    }
-        $progress = round($categorynumber/($professionNumber/100));
-        return $this->twig->render("panoramafirm/pobieranieCategory.html.twig", array(
-                    'progress' => $progress,
-                    'professionnumber' => $professionNumber,
-                    'professionactualnumber' => $categorynumber,
-                    'url' => $url,
-                    'info' => $info,
-                    'html' => $html,
+        if(file_exists($file) && !isset($_GET['restart'])){
+            $info = 1;
+            return $this->twig->render("panoramafirm/pobieranieCategoryStart.html.twig", array(
+                'file' => $file
                 )
             );
+        }else {
+            $categorynumber = $this->getCategoryNumber();
+            $profession = ['z','b','c','u','r','f','h','i','g','k','j','l','t','m','n','p','s','a'];
+            $kategorie = '';
+            $plik = '';
+            $info = ' ';
+            $professionNumber = count($profession);
+            @$url = 'http://panoramafirm.pl/biuro,'.$profession[$categorynumber].'/branze.html';
+
+            $html = " Adres obecny: <b>".$url."</b><br/><br/>";
+                $downloaded = $this->getContents($url);
+                if($downloaded != '0'){
+                   $dom = $this->loadHTML($downloaded);
+                }
+                
+            if($strona = @file_get_contents($url)){
+                
+                $dom = $this->loadHTML($strona);
+                $links = $dom->getElementsByTagName("article");
+                $article = $this->saveHTML($links);;
+                
+                $dom = $this->loadHTML($article);
+                $links = $dom->getElementsByTagName("a");
+                
+                foreach ($links as $link) {
+                    $kategorie .= $link->getAttribute('href').';';
+                    $html .= $link->getAttribute('href').'<br/>';
+                }
+                
+                $this->setData($kategorie,'categories');
+                
+                $categorynumber = $categorynumber+1;
+                
+                header( "refresh:0;url=index.php?site=pfcategories&nrkategorii=". $categorynumber ."" ); 
+                    
+            } else {
+                $info = "categoryend";
+            }
+            $progress = round($categorynumber/($professionNumber/100));
+            return $this->twig->render("panoramafirm/pobieranieCategory.html.twig", array(
+                        'progress' => $progress,
+                        'professionnumber' => $professionNumber,
+                        'professionactualnumber' => $categorynumber,
+                        'url' => $url,
+                        'info' => $info,
+                        'html' => $html,
+                    )
+                );
+        }
     }
     
+    
+    public function getInstructionSite()
+    {
+        return $this->twig->render("panoramafirm/instruction.html.twig", array());
+    }
+    
+    public function getDownloadedDataSite()
+    {
+        $catalog = 'dane/pf';
+        $files = $this->getDownloadedData($catalog);
+        return $this->twig->render("panoramafirm/downloadedData.html.twig", array(
+            'files' => $files,
+            'catalog' => $catalog
+        ));
+    }
     
 }
