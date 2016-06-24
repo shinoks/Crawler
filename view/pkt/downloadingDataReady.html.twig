@@ -15,11 +15,15 @@ Adres obecny: <b>{{ url }}</b><br/><br/>
     </div>
     {% if error == 'category'%}
         Brak kategorii. Wygeneruj najpierw kategorie następnie spróbuj ponownie<br/>
+    {% elseif error == '403' %}
+        Strona zablokowała ip odczekaj ok 24h zanim spróbujesz ponownie.
     {% endif %}
     
     {% if info == 'categoryend' %}
         GOTOWE - KONIEC<br/><br/>
         Przechodzę do następnej kategorii<br/>
+    
+        
     {% endif %}
 
  {{ html|raw }}

@@ -9,6 +9,10 @@ class panoramaFirm
         //$this->view = $_GET['view'];
         $this->twig = new Twig_Environment( new Twig_Loader_Filesystem("./view"),
             array( "cache" => "./view/cache" ) );
+            
+        if(!file_exists('dane/pf/')){
+            mkdir('dane/pf/');
+        }
     }
     
     
@@ -243,7 +247,8 @@ class panoramaFirm
     public function getCategorySite()
     {
         $file = 'dane/pf/categories.csv';
-        if(file_exists($file) && !isset($_GET['restart'])){
+
+        if(file_exists($file) && !isset($_GET['restart']) && !isset($_GET['go'])){
             $info = 1;
             return $this->twig->render("panoramafirm/pobieranieCategoryStart.html.twig", array(
                 'file' => $file
@@ -278,7 +283,7 @@ class panoramaFirm
                 
                 $categorynumber = $categorynumber+1;
                 
-                header( "refresh:0;url=index.php?site=pfcategories&nrkategorii=". $categorynumber ."" ); 
+                header( "refresh:0;url=index.php?site=pfcategories&nrkategorii=". $categorynumber ."&go" ); 
                     
             } else {
                 $info = "categoryend";
