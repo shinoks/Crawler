@@ -160,7 +160,7 @@ class polskieKsiazkiTelefoniczne
             $page = $this->getPageNumber();
             $categoriesCount = count($categories);
             $categoryNumber = $this->getCategoryNumber();
-            $url = 'https://www.pkt.pl/szukaj/'.$categories[$this->getCategoryNumber()] . '/'.$page;
+            $url = 'https://www.pkt.pl'.$categories[$this->getCategoryNumber()] . '/'.$page;
             $kat = explode('/',$url);
             $percent = round($categoryNumber/($categoriesCount/100),2); 
             $downloaded = $this->getContents($url);
@@ -186,27 +186,61 @@ class polskieKsiazkiTelefoniczne
                         $dom = $this->loadHTML($list);
                         
                         $links = $dom->getElementsByTagName('meta');
-                        $list = $this->saveHTML($links);
-                        var_dump($list);
                         
                         foreach ($links as $li){
-                            $tempClass = $link->getAttribute("itemprop");
-                        
+                            $tempClass = $li->getAttribute("itemprop");
                             if ($tempClass == 'telephone'){
-                                $article=$link->getAttribute('content').';';
-                                echo $article;
-                                $dane .= "\r\n";
-                                $ht .= "<br/>";
-                                $dane .= $article.';';
-                                $ht .= $article.'<br/>';
+                                $telephone=$li->getAttribute('content').';';
+                                $dane .= $telephone.';';
+                                $ht .= $telephone;
                                 $a++;
                             }
                         }
+                        $links = $dom->getElementsByTagName('h2');
+                        $list = $this->saveHTML($links);
+                        $dom = $this->loadHTML($list);
+                        $links = $dom->getElementsByTagName('a');
+                        foreach($links as $li){
+                            $company=$li->nodeValue.';';
+                            $dane .= $company;
+                            $dane .= "\r\n";
+                            $ht .= $company.'<br/>';
+                        }
+                        
+                    }                    
+                    
+                    if($temp == 'box-content company-row list-sel '){
+                        $list = $this->saveHTML($link);
+                        $dom = $this->loadHTML($list);
+                        
+                        $links = $dom->getElementsByTagName('meta');
+                        
+                        foreach ($links as $li){
+                            $tempClass = $li->getAttribute("itemprop");
+                            if ($tempClass == 'telephone'){
+                                $telephone=$li->getAttribute('content').';';
+                                $dane .= $telephone.';';
+                                $ht .= $telephone;
+                                $a++;
+                            }
+                        }
+                        $links = $dom->getElementsByTagName('h2');
+                        $list = $this->saveHTML($links);
+                        $dom = $this->loadHTML($list);
+                        $links = $dom->getElementsByTagName('a');
+                        foreach($links as $li){
+                            $company=$li->nodeValue.';';
+                            $dane .= $company;
+                            $dane .= "\r\n";
+                            $ht .= $company.'<br/>';
+                        }
+                        
                     }
                     
 
                     
                 }
+
                 $this->setData($dane,$kat[4]);
 
                 $page2 =$page+1;
@@ -214,7 +248,7 @@ class polskieKsiazkiTelefoniczne
                 if(count($kat) == 1){
                     $error ='category';
                 }else {
-                    //header( "refresh:1;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
+                    header( "refresh:10;url=index.php?site=pktdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
                 }
                 
             } else {
@@ -224,7 +258,7 @@ class polskieKsiazkiTelefoniczne
                 if($kat = 0){
                     $error ='category';
                 }else {
-                 //   header( "refresh:1;url=index.php?site=pfdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
+                    header( "refresh:10;url=index.php?site=pktdata&nrstrony=". $page2 ."&nrkategorii=" . $categoryNumber."" ); 
                 }
             }
             
