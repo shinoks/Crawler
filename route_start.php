@@ -1,28 +1,28 @@
 <?php
 if(!isset($_GET['site'])){
-    $start = new panoramaFirm();
+    $start = new PanoramaFirm();
     echo $start->getStartSite();
 } elseif ($_GET['site']=='pfdata'){
     //include('sites/panoramadane.php');
-    $panoramadane = new panoramaFirm();
+    $panoramadane = new PanoramaFirm();
     echo $panoramadane->getDataSite();
 } elseif ($_GET['site']=='pfcategories'){
-    $panoramakategorie = new panoramaFirm();
+    $panoramakategorie = new PanoramaFirm();
     echo $panoramakategorie->getCategorySite();
 } elseif ($_GET['site']=='pfinstruction'){
-    $instruction = new panoramaFirm();
+    $instruction = new PanoramaFirm();
     echo $instruction->getInstructionSite();
 } elseif ($_GET['site']=='pfdownloadeddata'){
-    $panoramadata = new panoramaFirm();
+    $panoramadata = new PanoramaFirm();
     echo $panoramadata->getDownloadedDataSite();
 } elseif ($_GET['site']=='contact'){
-    $contact = new defaultController();
+    $contact = new DefaultController();
     echo $contact->getContactSite();
 }  elseif ($_GET['site']=='pktcategories'){
-    $pktcategories = new polskieKsiazkiTelefoniczne();
+    $pktcategories = new PolskieKsiazkiTelefoniczne();
     echo $pktcategories->getCategorySite();
 }  elseif ($_GET['site']=='pktdata'){
-    $pktdata = new polskieKsiazkiTelefoniczne();
+    $pktdata = new PolskieKsiazkiTelefoniczne();
     echo $pktdata->getDataSite();
 } else {
     include('sites/start.php');

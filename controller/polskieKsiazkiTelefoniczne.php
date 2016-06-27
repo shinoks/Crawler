@@ -2,7 +2,7 @@
 
 use Masterminds\HTML5;
     
-class polskieKsiazkiTelefoniczne 
+class PolskieKsiazkiTelefoniczne 
 {
     function __construct()
     {

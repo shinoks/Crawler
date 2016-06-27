@@ -1,7 +1,7 @@
 <?php
 
     
-class defaultController 
+class DefaultController 
 {
     function __construct()
     {

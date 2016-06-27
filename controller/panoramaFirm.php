@@ -2,7 +2,7 @@
 
 use Masterminds\HTML5;
     
-class panoramaFirm 
+class PanoramaFirm 
 {
     function __construct()
     {

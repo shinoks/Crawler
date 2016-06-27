@@ -4,3 +4,7 @@ ehthumbs.db
 
 # Folder config file
 /view/cache
+/composer.phar
+/vendor/
+/dane/pkt/
+/dane/pf/
