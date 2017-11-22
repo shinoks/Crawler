@@ -1,4 +1,5 @@
 {
+  "name" : "shinoks/crawler",
   "require" : {
     "masterminds/html5": "2.*",
     "twig/twig": "~1.0"
